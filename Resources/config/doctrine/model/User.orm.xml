@@ -34,13 +34,13 @@
         <field name="deletedAt" column="deleted_at" type="datetime" nullable="true" />
 
         <one-to-one field="billingAddress" target-entity="Sylius\Component\Addressing\Model\AddressInterface">
-            <join-column name="billing_address_id" on-delete="SET NULL" />
+            <join-column name="billing_address_id" referenced-column-name="address_book_id" on-delete="SET NULL" />
             <cascade>
                 <cascade-persist />
             </cascade>
         </one-to-one>
         <one-to-one field="shippingAddress" target-entity="Sylius\Component\Addressing\Model\AddressInterface">
-            <join-column name="shipping_address_id"  on-delete="SET NULL" />
+            <join-column name="shipping_address_id" referenced-column-name="address_book_id" on-delete="SET NULL" />
             <cascade>
                 <cascade-persist />
             </cascade>
@@ -68,7 +68,7 @@
             </cascade>
             <join-table name="sylius_user_group">
                 <join-columns>
-                    <join-column name="user_id" referenced-column-name="id" on-delete="CASCADE"/>
+                    <join-column name="user_id" referenced-column-name="customers_id" on-delete="CASCADE"/>
                 </join-columns>
                 <inverse-join-columns>
                     <join-column name="group_id" referenced-column-name="id" on-delete="CASCADE"/>
@@ -79,7 +79,7 @@
         <many-to-many field="authorizationRoles" target-entity="Sylius\Component\Rbac\Model\RoleInterface">
             <join-table name="sylius_user_role">
                 <join-columns>
-                    <join-column name="user_id" referenced-column-name="id" nullable="false" on-delete="CASCADE" />
+                    <join-column name="user_id" referenced-column-name="customers_id" nullable="false" on-delete="CASCADE" />
                 </join-columns>
                 <inverse-join-columns>
                     <join-column name="role_id" referenced-column-name="id" nullable="false" on-delete="CASCADE" />
